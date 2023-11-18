@@ -4,7 +4,7 @@
 .global syscall0
 .type syscall0, @function
 syscall0:
-  li a7, a0
+  mv a7, a0
   ecall
   ret
 
@@ -12,7 +12,7 @@ syscall0:
 .global syscall1
 .type syscall1, @function
 syscall1:
-  li a7, a1
+  mv a7, a1
   ecall
   ret
 
@@ -20,7 +20,7 @@ syscall1:
 .global syscall2
 .type syscall2, @function
 syscall2:
-  li a7, a2
+  mv a7, a2
   ecall
   ret
 
@@ -28,7 +28,7 @@ syscall2:
 .global syscall3
 .type syscall3, @function
 syscall3:
-  li a7, a3
+  mv a7, a3
   ecall
   ret
 
@@ -36,7 +36,7 @@ syscall3:
 .global syscall4
 .type syscall4, @function
 syscall4:
-  li a7, a4
+  mv a7, a4
   ecall
   ret
 
@@ -44,7 +44,7 @@ syscall4:
 .global syscall5
 .type syscall5, @function
 syscall5:
-  li a7, a5
+  mv a7, a5
   ecall
   ret
 
@@ -52,7 +52,7 @@ syscall5:
 .global syscall6
 .type syscall6, @function
 syscall6:
-  li a7, a6
+  mv a7, a6
   ecall
   ret
 
