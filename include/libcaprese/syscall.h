@@ -52,7 +52,7 @@ extern "C" {
 
   typedef struct {
     uintptr_t result;
-    uintptr_t error;
+    intptr_t error;
   } sysret_t;
 
   sysret_t syscall0(uintptr_t code);
