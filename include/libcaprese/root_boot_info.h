@@ -12,8 +12,8 @@ extern "C" {
     cap_space_cap_t  first_cap_space_cap;
     page_table_cap_t root_page_table_cap;
     page_table_cap_t cap_space_page_table_caps[3];
-    mem_cap_t        mem_cap_start;
-    mem_cap_t        mem_cap_end;
+    size_t           num_mem_caps;
+    mem_cap_t        mem_caps[];
   } root_boot_info_t;
 
 #ifdef __cplusplus
