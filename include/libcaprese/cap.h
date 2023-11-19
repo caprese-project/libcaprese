@@ -3,6 +3,7 @@
 
 #include <assert.h>
 #include <libcaprese/syscall.h>
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 
