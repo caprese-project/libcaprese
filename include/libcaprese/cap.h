@@ -22,10 +22,6 @@ extern "C" {
     return syscall1(cap, SYS_CAP_TYPE);
   }
 
-  static inline sysret_t sys_cap_size(cap_type_t cap_type) {
-    return syscall1(cap_type, SYS_CAP_SIZE);
-  }
-
   static inline sysret_t sys_memcap_device(memcap_t cap) {
     return syscall1(cap, SYS_MEMCAP_DEVICE);
   }
