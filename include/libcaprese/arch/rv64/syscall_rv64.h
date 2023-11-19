@@ -68,4 +68,9 @@
 #define RISCV_MMU_SV39 39
 #define RISCV_MMU_SV48 48
 
+#define KILO_PAGE 0
+#define MEGA_PAGE 1
+#define GIGA_PAGE 2
+#define TERA_PAGE 3
+
 #endif // LIBCAPRESE_ARCH_RV64_SYSCALL_RV64_H_
