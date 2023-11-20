@@ -155,8 +155,8 @@ extern "C" {
     return sys_mem_cap_create_object(cap, CAP_CAP_SPACE, 0, 0, 0, 0, 0);
   }
 
-  static inline sysret_t sys_task_cap_kill(task_cap_t cap) {
-    return syscall1(cap, SYS_TASK_CAP_KILL);
+  static inline sysret_t sys_task_cap_kill(task_cap_t cap, int exit_status) {
+    return syscall2(cap, exit_status, SYS_TASK_CAP_KILL);
   }
 
   static inline sysret_t sys_task_cap_switch(task_cap_t cap) {
