@@ -1,7 +1,6 @@
 #ifndef LIBCAPRESE_CAP_H_
 #define LIBCAPRESE_CAP_H_
 
-#include <libcaprese/syscall.h>
 #include <stdint.h>
 
 #ifdef __cplusplus
