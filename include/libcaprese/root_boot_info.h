@@ -2,6 +2,7 @@
 #define LIBCAPRESE_ROOT_BOOT_INFO_H_
 
 #include <libcaprese/cap.h>
+#include <stddef.h>
 
 #ifdef __cplusplus
 extern "C" {
