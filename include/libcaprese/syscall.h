@@ -140,9 +140,9 @@ extern "C" {
     return sys_mem_cap_create_object(cap, CAP_TASK, cap_space_cap, root_page_table, cap_space_page_table0, cap_space_page_table1, cap_space_page_table2);
   }
 
-  static inline sysret_t sys_mem_cap_create_page_table_object(mem_cap_t cap, uintptr_t level) {
+  static inline sysret_t sys_mem_cap_create_page_table_object(mem_cap_t cap) {
     assert(sys_cap_type(cap).result == CAP_MEM);
-    return sys_mem_cap_create_object(cap, CAP_PAGE_TABLE, level, 0, 0, 0, 0);
+    return sys_mem_cap_create_object(cap, CAP_PAGE_TABLE, 0, 0, 0, 0, 0);
   }
 
   static inline sysret_t sys_mem_cap_create_virt_page_object(mem_cap_t cap, bool readable, bool writable, bool executable, uintptr_t level) {
