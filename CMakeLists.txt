@@ -14,6 +14,11 @@ set_target_properties(
   OUTPUT_NAME caprese
 )
 
+target_compile_options(
+  libcaprese PRIVATE
+  ${LIBCAPRESE_COMPILE_OPTIONS}
+)
+
 target_sources(
   libcaprese PRIVATE
   src/syscall.c
