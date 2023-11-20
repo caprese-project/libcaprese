@@ -16,6 +16,7 @@ set_target_properties(
 
 target_sources(
   libcaprese PRIVATE
+  src/syscall.c
   src/syscall.S
 )
 

@@ -64,6 +64,8 @@ extern "C" {
   sysret_t syscall6(uintptr_t arg0, uintptr_t arg1, uintptr_t arg2, uintptr_t arg3, uintptr_t arg4, uintptr_t arg5, uintptr_t code);
   sysret_t syscall7(uintptr_t arg0, uintptr_t arg1, uintptr_t arg2, uintptr_t arg3, uintptr_t arg4, uintptr_t arg5, uintptr_t arg6, uintptr_t code);
 
+  uintptr_t unwrap_sysret(sysret_t sysret);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus
