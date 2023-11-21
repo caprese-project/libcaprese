@@ -226,9 +226,10 @@ extern "C" {
     return syscall3(cap, index, child, SYS_PAGE_TABLE_CAP_MAP_TABLE);
   }
 
-  static inline sysret_t sys_page_table_cap_unmap_table(page_table_cap_t cap, uintptr_t index) {
+  static inline sysret_t sys_page_table_cap_unmap_table(page_table_cap_t cap, uintptr_t index, page_table_cap_t child) {
     assert(sys_cap_type(cap).result == CAP_PAGE_TABLE);
-    return syscall2(cap, index, SYS_PAGE_TABLE_CAP_UNMAP_TABLE);
+    assert(sys_cap_type(child).result == CAP_PAGE_TABLE);
+    return syscall3(cap, index, child, SYS_PAGE_TABLE_CAP_UNMAP_TABLE);
   }
 
   static inline sysret_t sys_page_table_cap_map_page(page_table_cap_t cap, uintptr_t index, bool readable, bool writable, bool executable, virt_page_cap_t child) {
@@ -237,14 +238,52 @@ extern "C" {
     return syscall6(cap, index, readable, writable, executable, child, SYS_PAGE_TABLE_CAP_MAP_PAGE);
   }
 
-  static inline sysret_t sys_page_table_cap_unmap_page(page_table_cap_t cap, uintptr_t index) {
+  static inline sysret_t sys_page_table_cap_unmap_page(page_table_cap_t cap, uintptr_t index, virt_page_cap_t child) {
     assert(sys_cap_type(cap).result == CAP_PAGE_TABLE);
-    return syscall2(cap, index, SYS_PAGE_TABLE_CAP_UNMAP_PAGE);
+    assert(sys_cap_type(child).result == CAP_VIRT_PAGE);
+    return syscall3(cap, index, child, SYS_PAGE_TABLE_CAP_UNMAP_PAGE);
   }
 
-  static inline sysret_t sys_page_table_cap_remap_page(page_table_cap_t cap, uintptr_t index, bool readable, bool writable, bool executable, virt_page_cap_t child) {
+  static inline sysret_t sys_page_table_cap_remap_page(page_table_cap_t cap, uintptr_t index, bool readable, bool writable, bool executable, virt_page_cap_t child, page_table_cap_t old_parent) {
     assert(sys_cap_type(cap).result == CAP_PAGE_TABLE);
-    return syscall6(cap, index, readable, writable, executable, child, SYS_PAGE_TABLE_CAP_REMAP_PAGE);
+    assert(sys_cap_type(child).result == CAP_VIRT_PAGE);
+    assert(sys_cap_type(old_parent).result == CAP_PAGE_TABLE);
+    return syscall7(cap, index, readable, writable, executable, child, old_parent, SYS_PAGE_TABLE_CAP_REMAP_PAGE);
+  }
+
+  static inline sysret_t sys_virt_page_cap_mapped(virt_page_cap_t cap) {
+    assert(sys_cap_type(cap).result == CAP_VIRT_PAGE);
+    return syscall1(cap, SYS_VIRT_PAGE_CAP_MAPPED);
+  }
+
+  static inline sysret_t sys_virt_page_cap_readable(virt_page_cap_t cap) {
+    assert(sys_cap_type(cap).result == CAP_VIRT_PAGE);
+    return syscall1(cap, SYS_VIRT_PAGE_CAP_READABLE);
+  }
+
+  static inline sysret_t sys_virt_page_cap_writable(virt_page_cap_t cap) {
+    assert(sys_cap_type(cap).result == CAP_VIRT_PAGE);
+    return syscall1(cap, SYS_VIRT_PAGE_CAP_WRITABLE);
+  }
+
+  static inline sysret_t sys_virt_page_cap_executable(virt_page_cap_t cap) {
+    assert(sys_cap_type(cap).result == CAP_VIRT_PAGE);
+    return syscall1(cap, SYS_VIRT_PAGE_CAP_EXECUTABLE);
+  }
+
+  static inline sysret_t sys_virt_page_cap_level(virt_page_cap_t cap) {
+    assert(sys_cap_type(cap).result == CAP_VIRT_PAGE);
+    return syscall1(cap, SYS_VIRT_PAGE_CAP_LEVEL);
+  }
+
+  static inline sysret_t sys_virt_page_cap_phys_addr(virt_page_cap_t cap) {
+    assert(sys_cap_type(cap).result == CAP_VIRT_PAGE);
+    return syscall1(cap, SYS_VIRT_PAGE_CAP_PHYS_ADDR);
+  }
+
+  static inline sysret_t sys_virt_page_cap_virt_addr(virt_page_cap_t cap) {
+    assert(sys_cap_type(cap).result == CAP_VIRT_PAGE);
+    return syscall1(cap, SYS_VIRT_PAGE_CAP_VIRT_ADDR);
   }
 
 #ifdef __cplusplus
