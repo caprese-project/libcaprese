@@ -47,6 +47,7 @@
 #define SYS_TASK_CAP_GET_REG      (SYSNS_TASK_CAP | 8)
 #define SYS_TASK_CAP_SET_REG      (SYSNS_TASK_CAP | 9)
 #define SYS_TASK_CAP_TRANSFER_CAP (SYSNS_TASK_CAP | 10)
+#define SYS_TASK_CAP_DELEGATE_CAP (SYSNS_TASK_CAP | 11)
 
 #define SYS_PAGE_TABLE_CAP_MAPPED      (SYSNS_PAGE_TABLE_CAP | 0)
 #define SYS_PAGE_TABLE_CAP_LEVEL       (SYSNS_PAGE_TABLE_CAP | 1)
@@ -208,6 +209,12 @@ extern "C" {
     assert(sys_cap_type(cap).result == CAP_TASK);
     assert(sys_cap_type(src).result != CAP_NULL);
     return syscall2(cap, src, SYS_TASK_CAP_TRANSFER_CAP);
+  }
+
+  static inline sysret_t sys_task_cap_delegate_cap(task_cap_t cap, cap_t src) {
+    assert(sys_cap_type(cap).result == CAP_TASK);
+    assert(sys_cap_type(src).result != CAP_NULL);
+    return syscall2(cap, src, SYS_TASK_CAP_DELEGATE_CAP);
   }
 
   static inline sysret_t sys_page_table_cap_mapped(page_table_cap_t cap) {
