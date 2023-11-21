@@ -25,7 +25,9 @@
 #include <libcaprese/arch/rv64/syscall_rv64.h>
 #endif
 
-#define SYS_CAP_TYPE (SYSNS_CAP | 0)
+#define SYS_CAP_TYPE   (SYSNS_CAP | 0)
+#define SYS_CAP_COPY   (SYSNS_CAP | 1)
+#define SYS_CAP_REVOKE (SYSNS_CAP | 2)
 
 #define SYS_MEM_CAP_DEVICE        (SYSNS_MEM_CAP | 0)
 #define SYS_MEM_CAP_READABLE      (SYSNS_MEM_CAP | 1)
@@ -111,6 +113,14 @@ extern "C" {
 
   static inline sysret_t sys_cap_type(cap_t cap) {
     return syscall1(cap, SYS_CAP_TYPE);
+  }
+
+  static inline sysret_t sys_cap_copy(cap_t cap, uintptr_t arg0, uintptr_t arg1, uintptr_t arg2, uintptr_t arg3, uintptr_t arg4, uintptr_t arg5) {
+    return syscall7(cap, arg0, arg1, arg2, arg3, arg4, arg5, SYS_CAP_COPY);
+  }
+
+  static inline sysret_t sys_cap_revoke(cap_t cap) {
+    return syscall1(cap, SYS_CAP_REVOKE);
   }
 
   static inline sysret_t sys_mem_cap_device(mem_cap_t cap) {
@@ -215,6 +225,11 @@ extern "C" {
     assert(sys_cap_type(cap).result == CAP_TASK);
     assert(sys_cap_type(src).result != CAP_NULL);
     return syscall2(cap, src, SYS_TASK_CAP_DELEGATE_CAP);
+  }
+
+  static inline sysret_t sys_task_cap_copy(task_cap_t cap) {
+    assert(sys_cap_type(cap).result == CAP_TASK);
+    return sys_cap_copy(cap, 0, 0, 0, 0, 0, 0);
   }
 
   static inline sysret_t sys_page_table_cap_mapped(page_table_cap_t cap) {
