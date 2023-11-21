@@ -245,12 +245,14 @@ extern "C" {
   static inline sysret_t sys_page_table_cap_map_table(page_table_cap_t cap, uintptr_t index, page_table_cap_t child) {
     assert(sys_cap_type(cap).result == CAP_PAGE_TABLE);
     assert(sys_cap_type(child).result == CAP_PAGE_TABLE);
+    assert(sys_page_table_cap_level(cap).result > KILO_PAGE);
     return syscall3(cap, index, child, SYS_PAGE_TABLE_CAP_MAP_TABLE);
   }
 
   static inline sysret_t sys_page_table_cap_unmap_table(page_table_cap_t cap, uintptr_t index, page_table_cap_t child) {
     assert(sys_cap_type(cap).result == CAP_PAGE_TABLE);
     assert(sys_cap_type(child).result == CAP_PAGE_TABLE);
+    assert(sys_page_table_cap_level(cap).result > KILO_PAGE);
     return syscall3(cap, index, child, SYS_PAGE_TABLE_CAP_UNMAP_TABLE);
   }
 
