@@ -23,10 +23,6 @@
 #define SYS_SYSTEM_CAPS_PER_CAP_SPACE (SYSNS_SYSTEM | 5)
 #define SYS_SYSTEM_YIELD              (SYSNS_SYSTEM | 6)
 
-#if defined(__riscv) && __riscv_xlen == 64
-#include <libcaprese/arch/rv64/syscall_rv64.h>
-#endif
-
 #define SYS_CAP_TYPE   (SYSNS_CAP | 0)
 #define SYS_CAP_COPY   (SYSNS_CAP | 1)
 #define SYS_CAP_REVOKE (SYSNS_CAP | 2)
@@ -323,5 +319,9 @@ extern "C" {
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus
+
+#if defined(__riscv) && __riscv_xlen == 64
+#include <libcaprese/arch/rv64/syscall_rv64.h>
+#endif
 
 #endif // LIBCAPRESE_SYSCALL_H_

@@ -80,8 +80,16 @@
 
 #define SYS_ARCH_MMU_MODE (SYSNS_ARCH | 0)
 
-static inline sysret_t sys_arch_mmu_mode() {
-  return syscall0(SYS_ARCH_MMU_MODE);
-}
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
+
+  static inline sysret_t sys_arch_mmu_mode() {
+    return syscall0(SYS_ARCH_MMU_MODE);
+  }
+
+#ifdef __cplusplus
+} // extern "C"
+#endif // __cplusplus
 
 #endif // LIBCAPRESE_ARCH_RV64_SYSCALL_RV64_H_
