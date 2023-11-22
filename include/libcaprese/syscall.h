@@ -21,6 +21,7 @@
 #define SYS_SYSTEM_USER_SPACE_START   (SYSNS_SYSTEM | 3)
 #define SYS_SYSTEM_USER_SPACE_END     (SYSNS_SYSTEM | 4)
 #define SYS_SYSTEM_CAPS_PER_CAP_SPACE (SYSNS_SYSTEM | 5)
+#define SYS_SYSTEM_YIELD              (SYSNS_SYSTEM | 6)
 
 #if defined(__riscv) && __riscv_xlen == 64
 #include <libcaprese/arch/rv64/syscall_rv64.h>
@@ -114,6 +115,10 @@ extern "C" {
 
   static inline sysret_t sys_system_caps_per_cap_space() {
     return syscall0(SYS_SYSTEM_CAPS_PER_CAP_SPACE);
+  }
+
+  static inline sysret_t sys_system_yield() {
+    return syscall0(SYS_SYSTEM_YIELD);
   }
 
   static inline sysret_t sys_cap_type(cap_t cap) {
