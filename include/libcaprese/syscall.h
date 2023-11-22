@@ -89,6 +89,18 @@ extern "C" {
 
   uintptr_t unwrap_sysret(sysret_t sysret);
 
+#ifdef __cplusplus
+} // extern "C"
+#endif // __cplusplus
+
+#if defined(__riscv) && __riscv_xlen == 64
+#include <libcaprese/arch/rv64/syscall_rv64.h>
+#endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
+
   static inline sysret_t sys_system_null() {
     return syscall0(SYS_SYSTEM_NULL);
   }
@@ -319,9 +331,5 @@ extern "C" {
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus
-
-#if defined(__riscv) && __riscv_xlen == 64
-#include <libcaprese/arch/rv64/syscall_rv64.h>
-#endif
 
 #endif // LIBCAPRESE_SYSCALL_H_
