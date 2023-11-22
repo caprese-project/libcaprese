@@ -76,6 +76,6 @@
 #define RISCV_MMU_SV39_MAX_PAGE GIGA_PAGE
 #define RISCV_MMU_SV48_MAX_PAGE TERA_PAGE
 
-#define RISCV_MMU_GET_PAGE_TABLE_INDEX(va, level) (((va) >> (9 * level + 12)) & 0x1ff)
+#define RISCV_MMU_GET_PAGE_TABLE_INDEX(va, level) (((va) >> (9 * (level) + 12)) & 0x1ff)
 
 #endif // LIBCAPRESE_ARCH_RV64_SYSCALL_RV64_H_
