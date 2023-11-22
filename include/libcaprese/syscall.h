@@ -49,13 +49,14 @@
 #define SYS_TASK_CAP_TRANSFER_CAP (SYSNS_TASK_CAP | 10)
 #define SYS_TASK_CAP_DELEGATE_CAP (SYSNS_TASK_CAP | 11)
 
-#define SYS_PAGE_TABLE_CAP_MAPPED      (SYSNS_PAGE_TABLE_CAP | 0)
-#define SYS_PAGE_TABLE_CAP_LEVEL       (SYSNS_PAGE_TABLE_CAP | 1)
-#define SYS_PAGE_TABLE_CAP_MAP_TABLE   (SYSNS_PAGE_TABLE_CAP | 2)
-#define SYS_PAGE_TABLE_CAP_UNMAP_TABLE (SYSNS_PAGE_TABLE_CAP | 3)
-#define SYS_PAGE_TABLE_CAP_MAP_PAGE    (SYSNS_PAGE_TABLE_CAP | 4)
-#define SYS_PAGE_TABLE_CAP_UNMAP_PAGE  (SYSNS_PAGE_TABLE_CAP | 5)
-#define SYS_PAGE_TABLE_CAP_REMAP_PAGE  (SYSNS_PAGE_TABLE_CAP | 6)
+#define SYS_PAGE_TABLE_CAP_MAPPED         (SYSNS_PAGE_TABLE_CAP | 0)
+#define SYS_PAGE_TABLE_CAP_LEVEL          (SYSNS_PAGE_TABLE_CAP | 1)
+#define SYS_PAGE_TABLE_CAP_MAP_TABLE      (SYSNS_PAGE_TABLE_CAP | 2)
+#define SYS_PAGE_TABLE_CAP_UNMAP_TABLE    (SYSNS_PAGE_TABLE_CAP | 3)
+#define SYS_PAGE_TABLE_CAP_MAP_PAGE       (SYSNS_PAGE_TABLE_CAP | 4)
+#define SYS_PAGE_TABLE_CAP_UNMAP_PAGE     (SYSNS_PAGE_TABLE_CAP | 5)
+#define SYS_PAGE_TABLE_CAP_REMAP_PAGE     (SYSNS_PAGE_TABLE_CAP | 6)
+#define SYS_PAGE_TABLE_CAP_VIRT_ADDR_BASE (SYSNS_PAGE_TABLE_CAP | 7)
 
 #define SYS_VIRT_PAGE_CAP_MAPPED     (SYSNS_VIRT_PAGE_CAP | 0)
 #define SYS_VIRT_PAGE_CAP_READABLE   (SYSNS_VIRT_PAGE_CAP | 1)
@@ -291,6 +292,11 @@ extern "C" {
     assert(sys_cap_type(child).result == CAP_VIRT_PAGE);
     assert(sys_cap_type(old_parent).result == CAP_PAGE_TABLE);
     return syscall7(cap, index, readable, writable, executable, child, old_parent, SYS_PAGE_TABLE_CAP_REMAP_PAGE);
+  }
+
+  static inline sysret_t sys_page_table_cap_virt_addr_base(page_table_cap_t cap) {
+    assert(sys_cap_type(cap).result == CAP_PAGE_TABLE);
+    return syscall1(cap, SYS_PAGE_TABLE_CAP_VIRT_ADDR_BASE);
   }
 
   static inline sysret_t sys_virt_page_cap_mapped(virt_page_cap_t cap) {
