@@ -78,4 +78,10 @@
 
 #define RISCV_MMU_GET_PAGE_TABLE_INDEX(va, level) (((va) >> (9 * (level) + 12)) & 0x1ff)
 
+#define SYS_ARCH_MMU_MODE (SYSNS_ARCH | 0)
+
+static inline sysret_t sys_arch_mmu_mode() {
+  return syscall0(SYS_ARCH_MMU_MODE);
+}
+
 #endif // LIBCAPRESE_ARCH_RV64_SYSCALL_RV64_H_
