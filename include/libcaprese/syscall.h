@@ -23,6 +23,8 @@
 #define SYS_SYSTEM_USER_SPACE_END     (SYSNS_SYSTEM | 4)
 #define SYS_SYSTEM_CAPS_PER_CAP_SPACE (SYSNS_SYSTEM | 5)
 #define SYS_SYSTEM_YIELD              (SYSNS_SYSTEM | 6)
+#define SYS_SYSTEM_CAP_SIZE           (SYSNS_SYSTEM | 7)
+#define SYS_SYSTEM_CAP_ALIGN          (SYSNS_SYSTEM | 8)
 
 #define SYS_CAP_TYPE   (SYSNS_CAP | 0)
 #define SYS_CAP_COPY   (SYSNS_CAP | 1)
@@ -138,6 +140,14 @@ extern "C" {
     return syscall0(SYS_SYSTEM_YIELD);
   }
 
+  static inline sysret_t sys_system_cap_size(cap_type_t type) {
+    return syscall1(SYS_SYSTEM_CAP_SIZE, type);
+  }
+
+  static inline sysret_t sys_system_cap_align(cap_type_t type) {
+    return syscall1(SYS_SYSTEM_CAP_ALIGN, type);
+  }
+
   static inline sysret_t sys_cap_type(cap_t cap) {
     return syscall1(cap, SYS_CAP_TYPE);
   }
@@ -195,6 +205,11 @@ extern "C" {
                                                         page_table_cap_t cap_space_page_table2) {
     assert(sys_cap_type(cap).result == CAP_MEM);
     return sys_mem_cap_create_object(cap, CAP_TASK, cap_space_cap, root_page_table, cap_space_page_table0, cap_space_page_table1, cap_space_page_table2);
+  }
+
+  static inline sysret_t sys_mem_cap_create_endpoint_object(mem_cap_t cap) {
+    assert(sys_cap_type(cap).result == CAP_MEM);
+    return sys_mem_cap_create_object(cap, CAP_ENDPOINT, 0, 0, 0, 0, 0);
   }
 
   static inline sysret_t sys_mem_cap_create_page_table_object(mem_cap_t cap) {
