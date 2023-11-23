@@ -59,6 +59,7 @@
 #define SYS_ENDPOINT_CAP_NB_SEND_SHORT (SYSNS_ENDPOINT_CAP | 3)
 #define SYS_ENDPOINT_CAP_NB_SEND_LONG  (SYSNS_ENDPOINT_CAP | 4)
 #define SYS_ENDPOINT_CAP_NB_RECEIVE    (SYSNS_ENDPOINT_CAP | 5)
+#define SYS_ENDPOINT_CAP_CALL          (SYSNS_ENDPOINT_CAP | 6)
 
 #define SYS_PAGE_TABLE_CAP_MAPPED         (SYSNS_PAGE_TABLE_CAP | 0)
 #define SYS_PAGE_TABLE_CAP_LEVEL          (SYSNS_PAGE_TABLE_CAP | 1)
@@ -308,6 +309,11 @@ extern "C" {
   static inline sysret_t sys_endpoint_cap_nb_receive(endpoint_cap_t cap, message_buffer_t* msg_buf) {
     assert(sys_cap_type(cap).result == CAP_ENDPOINT);
     return syscall2(cap, (uintptr_t)msg_buf, SYS_ENDPOINT_CAP_NB_RECEIVE);
+  }
+
+  static inline sysret_t sys_endpoint_cap_call(endpoint_cap_t cap, message_buffer_t* msg_buf) {
+    assert(sys_cap_type(cap).result == CAP_ENDPOINT);
+    return syscall2(cap, (uintptr_t)msg_buf, SYS_ENDPOINT_CAP_CALL);
   }
 
   static inline sysret_t sys_page_table_cap_mapped(page_table_cap_t cap) {
