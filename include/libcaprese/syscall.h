@@ -39,18 +39,19 @@
 #define SYS_MEM_CAP_USED_SIZE     (SYSNS_MEM_CAP | 6)
 #define SYS_MEM_CAP_CREATE_OBJECT (SYSNS_MEM_CAP | 7)
 
-#define SYS_TASK_CAP_KILLABLE     (SYSNS_TASK_CAP | 0)
-#define SYS_TASK_CAP_SWITCHABLE   (SYSNS_TASK_CAP | 1)
-#define SYS_TASK_CAP_SUSPENDABLE  (SYSNS_TASK_CAP | 2)
-#define SYS_TASK_CAP_RESUMABLE    (SYSNS_TASK_CAP | 3)
-#define SYS_TASK_CAP_KILL         (SYSNS_TASK_CAP | 4)
-#define SYS_TASK_CAP_SWITCH       (SYSNS_TASK_CAP | 5)
-#define SYS_TASK_CAP_SUSPEND      (SYSNS_TASK_CAP | 6)
-#define SYS_TASK_CAP_RESUME       (SYSNS_TASK_CAP | 7)
-#define SYS_TASK_CAP_GET_REG      (SYSNS_TASK_CAP | 8)
-#define SYS_TASK_CAP_SET_REG      (SYSNS_TASK_CAP | 9)
-#define SYS_TASK_CAP_TRANSFER_CAP (SYSNS_TASK_CAP | 10)
-#define SYS_TASK_CAP_DELEGATE_CAP (SYSNS_TASK_CAP | 11)
+#define SYS_TASK_CAP_TID          (SYSNS_TASK_CAP | 0)
+#define SYS_TASK_CAP_KILLABLE     (SYSNS_TASK_CAP | 1)
+#define SYS_TASK_CAP_SWITCHABLE   (SYSNS_TASK_CAP | 2)
+#define SYS_TASK_CAP_SUSPENDABLE  (SYSNS_TASK_CAP | 3)
+#define SYS_TASK_CAP_RESUMABLE    (SYSNS_TASK_CAP | 4)
+#define SYS_TASK_CAP_KILL         (SYSNS_TASK_CAP | 5)
+#define SYS_TASK_CAP_SWITCH       (SYSNS_TASK_CAP | 6)
+#define SYS_TASK_CAP_SUSPEND      (SYSNS_TASK_CAP | 7)
+#define SYS_TASK_CAP_RESUME       (SYSNS_TASK_CAP | 8)
+#define SYS_TASK_CAP_GET_REG      (SYSNS_TASK_CAP | 9)
+#define SYS_TASK_CAP_SET_REG      (SYSNS_TASK_CAP | 10)
+#define SYS_TASK_CAP_TRANSFER_CAP (SYSNS_TASK_CAP | 11)
+#define SYS_TASK_CAP_DELEGATE_CAP (SYSNS_TASK_CAP | 12)
 
 #define SYS_ENDPOINT_CAP_SEND_SHORT    (SYSNS_ENDPOINT_CAP | 0)
 #define SYS_ENDPOINT_CAP_SEND_LONG     (SYSNS_ENDPOINT_CAP | 1)
@@ -225,6 +226,11 @@ extern "C" {
   static inline sysret_t sys_mem_cap_create_cap_space_object(mem_cap_t cap) {
     assert(sys_cap_type(cap).result == CAP_MEM);
     return sys_mem_cap_create_object(cap, CAP_CAP_SPACE, 0, 0, 0, 0, 0);
+  }
+
+  static inline sysret_t sys_task_cap_tid(task_cap_t cap) {
+    assert(sys_cap_type(cap).result == CAP_TASK);
+    return syscall1(cap, SYS_TASK_CAP_TID);
   }
 
   static inline sysret_t sys_task_cap_kill(task_cap_t cap, int exit_status) {
