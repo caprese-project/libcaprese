@@ -316,6 +316,11 @@ extern "C" {
     return syscall2(cap, (uintptr_t)msg_buf, SYS_ENDPOINT_CAP_CALL);
   }
 
+  static inline sysret_t sys_endpoint_cap_copy(endpoint_cap_t cap) {
+    assert(sys_cap_type(cap).result == CAP_ENDPOINT);
+    return sys_cap_copy(cap, 0, 0, 0, 0, 0, 0);
+  }
+
   static inline sysret_t sys_page_table_cap_mapped(page_table_cap_t cap) {
     assert(sys_cap_type(cap).result == CAP_PAGE_TABLE);
     return syscall1(cap, SYS_PAGE_TABLE_CAP_MAPPED);
