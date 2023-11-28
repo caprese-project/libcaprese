@@ -1,6 +1,9 @@
 #ifndef LIBCAPRESE_ARCH_RV64_SYSCALL_RV64_H_
 #define LIBCAPRESE_ARCH_RV64_SYSCALL_RV64_H_
 
+#include <stddef.h>
+#include <stdint.h>
+
 #define ARCH_REG_RA   0
 #define ARCH_REG_SP   1
 #define ARCH_REG_GP   2
@@ -81,13 +84,30 @@
 #define RISCV_MMU_SV39_MAX_PAGE GIGA_PAGE
 #define RISCV_MMU_SV48_MAX_PAGE TERA_PAGE
 
-#define RISCV_MMU_GET_PAGE_TABLE_INDEX(va, level) (((va) >> (9 * (level) + 12)) & 0x1ff)
-
 #define SYS_ARCH_MMU_MODE (SYSNS_ARCH | 0)
 
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
+
+  static inline size_t get_page_size(int level) {
+    switch (level) {
+      case KILO_PAGE:
+        return KILO_PAGE_SIZE;
+      case MEGA_PAGE:
+        return MEGA_PAGE_SIZE;
+      case GIGA_PAGE:
+        return GIGA_PAGE_SIZE;
+      case TERA_PAGE:
+        return TERA_PAGE_SIZE;
+      default:
+        return 0;
+    }
+  }
+
+  static inline int get_page_table_index(uintptr_t virt_addr, int level) {
+    return (virt_addr >> (9 * (level) + 12)) & 0x1ff;
+  }
 
   static inline sysret_t sys_arch_mmu_mode() {
     return syscall0(SYS_ARCH_MMU_MODE);
