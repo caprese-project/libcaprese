@@ -418,6 +418,11 @@ extern "C" {
     return syscall2(cap0, cap1, SYS_ID_CAP_COMPARE);
   }
 
+  static inline sysret_t sys_id_cap_copy(id_cap_t cap) {
+    assert(unwrap_sysret(sys_cap_type(cap)) == CAP_ID);
+    return sys_cap_copy(cap, 0, 0, 0, 0, 0, 0);
+  }
+
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus
