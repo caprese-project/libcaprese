@@ -54,13 +54,15 @@
 #define SYS_TASK_CAP_TRANSFER_CAP (SYSNS_TASK_CAP | 11)
 #define SYS_TASK_CAP_DELEGATE_CAP (SYSNS_TASK_CAP | 12)
 
-#define SYS_ENDPOINT_CAP_SEND_SHORT    (SYSNS_ENDPOINT_CAP | 0)
-#define SYS_ENDPOINT_CAP_SEND_LONG     (SYSNS_ENDPOINT_CAP | 1)
-#define SYS_ENDPOINT_CAP_RECEIVE       (SYSNS_ENDPOINT_CAP | 2)
-#define SYS_ENDPOINT_CAP_NB_SEND_SHORT (SYSNS_ENDPOINT_CAP | 3)
-#define SYS_ENDPOINT_CAP_NB_SEND_LONG  (SYSNS_ENDPOINT_CAP | 4)
-#define SYS_ENDPOINT_CAP_NB_RECEIVE    (SYSNS_ENDPOINT_CAP | 5)
-#define SYS_ENDPOINT_CAP_CALL          (SYSNS_ENDPOINT_CAP | 6)
+#define SYS_ENDPOINT_CAP_SEND_SHORT        (SYSNS_ENDPOINT_CAP | 0)
+#define SYS_ENDPOINT_CAP_SEND_LONG         (SYSNS_ENDPOINT_CAP | 1)
+#define SYS_ENDPOINT_CAP_RECEIVE           (SYSNS_ENDPOINT_CAP | 2)
+#define SYS_ENDPOINT_CAP_REPLY             (SYSNS_ENDPOINT_CAP | 3)
+#define SYS_ENDPOINT_CAP_NB_SEND_SHORT     (SYSNS_ENDPOINT_CAP | 4)
+#define SYS_ENDPOINT_CAP_NB_SEND_LONG      (SYSNS_ENDPOINT_CAP | 5)
+#define SYS_ENDPOINT_CAP_NB_RECEIVE        (SYSNS_ENDPOINT_CAP | 6)
+#define SYS_ENDPOINT_CAP_CALL              (SYSNS_ENDPOINT_CAP | 7)
+#define SYS_ENDPOINT_CAP_REPLY_AND_RECEIVE (SYSNS_ENDPOINT_CAP | 8)
 
 #define SYS_PAGE_TABLE_CAP_MAPPED         (SYSNS_PAGE_TABLE_CAP | 0)
 #define SYS_PAGE_TABLE_CAP_LEVEL          (SYSNS_PAGE_TABLE_CAP | 1)
@@ -300,6 +302,11 @@ extern "C" {
     return syscall2(cap, (uintptr_t)msg_buf, SYS_ENDPOINT_CAP_RECEIVE);
   }
 
+  static inline sysret_t sys_endpoint_cap_reply(endpoint_cap_t cap, message_buffer_t* msg_buf) {
+    assert(unwrap_sysret(sys_cap_type(cap)) == CAP_ENDPOINT);
+    return syscall2(cap, (uintptr_t)msg_buf, SYS_ENDPOINT_CAP_REPLY);
+  }
+
   static inline sysret_t sys_endpoint_cap_nb_send_short(endpoint_cap_t cap, uintptr_t arg0, uintptr_t arg1, uintptr_t arg2, uintptr_t arg3, uintptr_t arg4, uintptr_t arg5) {
     assert(unwrap_sysret(sys_cap_type(cap)) == CAP_ENDPOINT);
     return syscall7(cap, arg0, arg1, arg2, arg3, arg4, arg5, SYS_ENDPOINT_CAP_NB_SEND_SHORT);
@@ -318,6 +325,11 @@ extern "C" {
   static inline sysret_t sys_endpoint_cap_call(endpoint_cap_t cap, message_buffer_t* msg_buf) {
     assert(unwrap_sysret(sys_cap_type(cap)) == CAP_ENDPOINT);
     return syscall2(cap, (uintptr_t)msg_buf, SYS_ENDPOINT_CAP_CALL);
+  }
+
+  static inline sysret_t sys_endpoint_cap_reply_and_receive(endpoint_cap_t cap, message_buffer_t* msg_buf) {
+    assert(unwrap_sysret(sys_cap_type(cap)) == CAP_ENDPOINT);
+    return syscall2(cap, (uintptr_t)msg_buf, SYS_ENDPOINT_CAP_REPLY_AND_RECEIVE);
   }
 
   static inline sysret_t sys_endpoint_cap_copy(endpoint_cap_t cap) {
