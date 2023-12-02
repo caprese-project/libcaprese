@@ -85,8 +85,9 @@
 #define SYS_ID_CAP_COMPARE (SYSNS_ID_CAP | 1)
 
 #define SYS_S_OK               (0)
-#define SYS_E_INVALID_ARGUMENT (-1)
-#define SYS_E_INVALID_CODE     (-2)
+#define SYS_E_UNKNOWN          (-1)
+#define SYS_E_INVALID_ARGUMENT (-2)
+#define SYS_E_INVALID_CODE     (-3)
 
 #ifdef __cplusplus
 extern "C" {
