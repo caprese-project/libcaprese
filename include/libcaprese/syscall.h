@@ -84,10 +84,13 @@
 #define SYS_ID_CAP_CREATE  (SYSNS_ID_CAP | 0)
 #define SYS_ID_CAP_COMPARE (SYSNS_ID_CAP | 1)
 
-#define SYS_S_OK               (0)
-#define SYS_E_UNKNOWN          (-1)
-#define SYS_E_INVALID_ARGUMENT (-2)
-#define SYS_E_INVALID_CODE     (-3)
+#define SYS_S_OK        (0)
+#define SYS_E_UNKNOWN   (-1)
+#define SYS_E_CAP_TYPE  (-2)
+#define SYS_E_CAP_STATE (-3)
+#define SYS_E_ILL_CODE  (-4)
+#define SYS_E_ILL_ARGS  (-5)
+#define SYS_E_ILL_STATE (-6)
 
 #ifdef __cplusplus
 extern "C" {
@@ -106,6 +109,14 @@ extern "C" {
   sysret_t syscall5(uintptr_t arg0, uintptr_t arg1, uintptr_t arg2, uintptr_t arg3, uintptr_t arg4, uintptr_t code);
   sysret_t syscall6(uintptr_t arg0, uintptr_t arg1, uintptr_t arg2, uintptr_t arg3, uintptr_t arg4, uintptr_t arg5, uintptr_t code);
   sysret_t syscall7(uintptr_t arg0, uintptr_t arg1, uintptr_t arg2, uintptr_t arg3, uintptr_t arg4, uintptr_t arg5, uintptr_t arg6, uintptr_t code);
+
+  static inline bool sysret_succeeded(sysret_t sysret) {
+    return sysret.error >= 0;
+  }
+
+  static inline bool sysret_failed(sysret_t sysret) {
+    return sysret.error < 0;
+  }
 
   uintptr_t unwrap_sysret(sysret_t sysret);
 
