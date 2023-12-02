@@ -15,6 +15,7 @@
 #define SYSNS_ENDPOINT_CAP   (5 << 16)
 #define SYSNS_PAGE_TABLE_CAP (6 << 16)
 #define SYSNS_VIRT_PAGE_CAP  (7 << 16)
+#define SYSNS_ID_CAP         (8 << 16)
 
 #define SYS_SYSTEM_NULL               (SYSNS_SYSTEM | 0)
 #define SYS_SYSTEM_CORE_ID            (SYSNS_SYSTEM | 1)
@@ -77,6 +78,9 @@
 #define SYS_VIRT_PAGE_CAP_LEVEL      (SYSNS_VIRT_PAGE_CAP | 4)
 #define SYS_VIRT_PAGE_CAP_PHYS_ADDR  (SYSNS_VIRT_PAGE_CAP | 5)
 #define SYS_VIRT_PAGE_CAP_VIRT_ADDR  (SYSNS_VIRT_PAGE_CAP | 6)
+
+#define SYS_ID_CAP_CREATE (SYSNS_ID_CAP | 0)
+#define SYS_ID_CAP_SAME   (SYSNS_ID_CAP | 1)
 
 #define SYS_S_OK               (0)
 #define SYS_E_INVALID_ARGUMENT (-1)
@@ -402,6 +406,16 @@ extern "C" {
   static inline sysret_t sys_virt_page_cap_virt_addr(virt_page_cap_t cap) {
     assert(unwrap_sysret(sys_cap_type(cap)) == CAP_VIRT_PAGE);
     return syscall1(cap, SYS_VIRT_PAGE_CAP_VIRT_ADDR);
+  }
+
+  static inline sysret_t sys_id_cap_create() {
+    return syscall0(SYS_ID_CAP_CREATE);
+  }
+
+  static inline sysret_t sys_id_cap_same(id_cap_t cap0, id_cap_t cap1) {
+    assert(unwrap_sysret(sys_cap_type(cap0)) == CAP_ID);
+    assert(unwrap_sysret(sys_cap_type(cap1)) == CAP_ID);
+    return syscall2(cap0, cap1, SYS_ID_CAP_SAME);
   }
 
 #ifdef __cplusplus
