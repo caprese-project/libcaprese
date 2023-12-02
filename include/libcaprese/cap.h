@@ -14,6 +14,7 @@ extern "C" {
   typedef cap_t     page_table_cap_t;
   typedef cap_t     virt_page_cap_t;
   typedef cap_t     cap_space_cap_t;
+  typedef cap_t     id_cap_t;
 
   typedef enum {
     CAP_NULL       = 0,
@@ -23,7 +24,8 @@ extern "C" {
     CAP_PAGE_TABLE = 4,
     CAP_VIRT_PAGE  = 5,
     CAP_CAP_SPACE  = 6,
-    CAP_ZOMBIE     = 7,
+    CAP_ID         = 7,
+    CAP_ZOMBIE     = 8,
     CAP_UNKNOWN    = -1,
   } cap_type_t;
 
