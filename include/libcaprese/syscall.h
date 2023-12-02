@@ -96,9 +96,12 @@
 extern "C" {
 #endif // __cplusplus
 
+  typedef uintptr_t sysret_result_t;
+  typedef intptr_t  sysret_error_t;
+
   typedef struct {
-    uintptr_t result;
-    intptr_t  error;
+    sysret_result_t result;
+    sysret_error_t  error;
   } sysret_t;
 
   sysret_t syscall0(uintptr_t code);
@@ -118,7 +121,7 @@ extern "C" {
     return sysret.error < 0;
   }
 
-  uintptr_t unwrap_sysret(sysret_t sysret);
+  sysret_result_t unwrap_sysret(sysret_t sysret);
 
 #ifdef __cplusplus
 } // extern "C"
