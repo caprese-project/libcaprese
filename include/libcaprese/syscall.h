@@ -79,8 +79,8 @@
 #define SYS_VIRT_PAGE_CAP_PHYS_ADDR  (SYSNS_VIRT_PAGE_CAP | 5)
 #define SYS_VIRT_PAGE_CAP_VIRT_ADDR  (SYSNS_VIRT_PAGE_CAP | 6)
 
-#define SYS_ID_CAP_CREATE (SYSNS_ID_CAP | 0)
-#define SYS_ID_CAP_SAME   (SYSNS_ID_CAP | 1)
+#define SYS_ID_CAP_CREATE  (SYSNS_ID_CAP | 0)
+#define SYS_ID_CAP_COMPARE (SYSNS_ID_CAP | 1)
 
 #define SYS_S_OK               (0)
 #define SYS_E_INVALID_ARGUMENT (-1)
@@ -412,10 +412,10 @@ extern "C" {
     return syscall0(SYS_ID_CAP_CREATE);
   }
 
-  static inline sysret_t sys_id_cap_same(id_cap_t cap0, id_cap_t cap1) {
+  static inline sysret_t sys_id_cap_compare(id_cap_t cap0, id_cap_t cap1) {
     assert(unwrap_sysret(sys_cap_type(cap0)) == CAP_ID);
     assert(unwrap_sysret(sys_cap_type(cap1)) == CAP_ID);
-    return syscall2(cap0, cap1, SYS_ID_CAP_SAME);
+    return syscall2(cap0, cap1, SYS_ID_CAP_COMPARE);
   }
 
 #ifdef __cplusplus
