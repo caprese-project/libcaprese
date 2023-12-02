@@ -92,6 +92,7 @@
 #define SYS_E_ILL_ARGS  (-5)
 #define SYS_E_ILL_STATE (-6)
 #define SYS_E_CANCELED  (-7)
+#define SYS_E_BLOCKED   (-8)
 
 #ifdef __cplusplus
 extern "C" {
