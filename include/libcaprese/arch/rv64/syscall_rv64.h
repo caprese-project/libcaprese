@@ -65,7 +65,7 @@
 #define REG_SYS_RET_0       ARCH_REG_A0
 #define REG_SYS_RET_1       ARCH_REG_A1
 
-#define REG_NUM_ARGS 7
+#define REG_NUM_ARGS 8
 #define REG_NUM_RETS 2
 
 #define RISCV_MMU_SV39 39
