@@ -91,18 +91,11 @@ extern "C" {
 #endif // __cplusplus
 
   static inline size_t get_page_size(int level) {
-    switch (level) {
-      case KILO_PAGE:
-        return KILO_PAGE_SIZE;
-      case MEGA_PAGE:
-        return MEGA_PAGE_SIZE;
-      case GIGA_PAGE:
-        return GIGA_PAGE_SIZE;
-      case TERA_PAGE:
-        return TERA_PAGE_SIZE;
-      default:
-        return 0;
-    }
+    return (size_t)1 << (9 * (level) + 12);
+  }
+
+  static inline uintptr_t get_page_table_base_addr(uintptr_t virt_addr, int level) {
+    return (virt_addr >> (9 * (level + 1) + 12)) << (9 * (level + 1) + 12);
   }
 
   static inline int get_page_table_index(uintptr_t virt_addr, int level) {
@@ -111,6 +104,17 @@ extern "C" {
 
   static inline sysret_t sys_arch_mmu_mode() {
     return syscall0(SYS_ARCH_MMU_MODE);
+  }
+
+  static inline int get_max_page() {
+    switch (unwrap_sysret(sys_arch_mmu_mode())) {
+      case RISCV_MMU_SV39:
+        return RISCV_MMU_SV39_MAX_PAGE;
+      case RISCV_MMU_SV48:
+        return RISCV_MMU_SV48_MAX_PAGE;
+      default:
+        return 0;
+    }
   }
 
 #ifdef __cplusplus
