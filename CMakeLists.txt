@@ -4,7 +4,7 @@ project(
   libcaprese
   VERSION 0.0.1
   HOMEPAGE_URL https://github.com/caprese-project/libcaprese
-  LANGUAGES C ASM
+  LANGUAGES C CXX ASM
 )
 
 add_library(libcaprese STATIC)
