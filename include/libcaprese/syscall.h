@@ -166,11 +166,11 @@ extern "C" {
   }
 
   static inline sysret_t sys_system_cap_size(cap_type_t type) {
-    return syscall1(SYS_SYSTEM_CAP_SIZE, type);
+    return syscall1(type, SYS_SYSTEM_CAP_SIZE);
   }
 
   static inline sysret_t sys_system_cap_align(cap_type_t type) {
-    return syscall1(SYS_SYSTEM_CAP_ALIGN, type);
+    return syscall1(type, SYS_SYSTEM_CAP_ALIGN);
   }
 
   static inline sysret_t sys_cap_type(cap_t cap) {
