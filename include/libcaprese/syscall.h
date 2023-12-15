@@ -84,15 +84,16 @@
 #define SYS_ID_CAP_CREATE  (SYSNS_ID_CAP | 0)
 #define SYS_ID_CAP_COMPARE (SYSNS_ID_CAP | 1)
 
-#define SYS_S_OK        (0)
-#define SYS_E_UNKNOWN   (-1)
-#define SYS_E_CAP_TYPE  (-2)
-#define SYS_E_CAP_STATE (-3)
-#define SYS_E_ILL_CODE  (-4)
-#define SYS_E_ILL_ARGS  (-5)
-#define SYS_E_ILL_STATE (-6)
-#define SYS_E_CANCELED  (-7)
-#define SYS_E_BLOCKED   (-8)
+#define SYS_S_OK               (0)
+#define SYS_E_UNKNOWN          (-1)
+#define SYS_E_CAP_TYPE         (-2)
+#define SYS_E_CAP_STATE        (-3)
+#define SYS_E_ILL_CODE         (-4)
+#define SYS_E_ILL_ARGS         (-5)
+#define SYS_E_ILL_STATE        (-6)
+#define SYS_E_CANCELED         (-7)
+#define SYS_E_BLOCKED          (-8)
+#define SYS_E_OUT_OF_CAP_SPACE (-9)
 
 #ifdef __cplusplus
 extern "C" {
