@@ -40,19 +40,23 @@
 #define SYS_MEM_CAP_USED_SIZE     (SYSNS_MEM_CAP | 6)
 #define SYS_MEM_CAP_CREATE_OBJECT (SYSNS_MEM_CAP | 7)
 
-#define SYS_TASK_CAP_TID          (SYSNS_TASK_CAP | 0)
-#define SYS_TASK_CAP_KILLABLE     (SYSNS_TASK_CAP | 1)
-#define SYS_TASK_CAP_SWITCHABLE   (SYSNS_TASK_CAP | 2)
-#define SYS_TASK_CAP_SUSPENDABLE  (SYSNS_TASK_CAP | 3)
-#define SYS_TASK_CAP_RESUMABLE    (SYSNS_TASK_CAP | 4)
-#define SYS_TASK_CAP_KILL         (SYSNS_TASK_CAP | 5)
-#define SYS_TASK_CAP_SWITCH       (SYSNS_TASK_CAP | 6)
-#define SYS_TASK_CAP_SUSPEND      (SYSNS_TASK_CAP | 7)
-#define SYS_TASK_CAP_RESUME       (SYSNS_TASK_CAP | 8)
-#define SYS_TASK_CAP_GET_REG      (SYSNS_TASK_CAP | 9)
-#define SYS_TASK_CAP_SET_REG      (SYSNS_TASK_CAP | 10)
-#define SYS_TASK_CAP_TRANSFER_CAP (SYSNS_TASK_CAP | 11)
-#define SYS_TASK_CAP_DELEGATE_CAP (SYSNS_TASK_CAP | 12)
+#define SYS_TASK_CAP_TID                 (SYSNS_TASK_CAP | 0)
+#define SYS_TASK_CAP_KILLABLE            (SYSNS_TASK_CAP | 1)
+#define SYS_TASK_CAP_SWITCHABLE          (SYSNS_TASK_CAP | 2)
+#define SYS_TASK_CAP_SUSPENDABLE         (SYSNS_TASK_CAP | 3)
+#define SYS_TASK_CAP_RESUMABLE           (SYSNS_TASK_CAP | 4)
+#define SYS_TASK_CAP_KILL                (SYSNS_TASK_CAP | 5)
+#define SYS_TASK_CAP_SWITCH              (SYSNS_TASK_CAP | 6)
+#define SYS_TASK_CAP_SUSPEND             (SYSNS_TASK_CAP | 7)
+#define SYS_TASK_CAP_RESUME              (SYSNS_TASK_CAP | 8)
+#define SYS_TASK_CAP_GET_REG             (SYSNS_TASK_CAP | 9)
+#define SYS_TASK_CAP_SET_REG             (SYSNS_TASK_CAP | 10)
+#define SYS_TASK_CAP_TRANSFER_CAP        (SYSNS_TASK_CAP | 11)
+#define SYS_TASK_CAP_DELEGATE_CAP        (SYSNS_TASK_CAP | 12)
+#define SYS_TASK_CAP_GET_FREE_SLOT_COUNT (SYSNS_TASK_CAP | 13)
+#define SYS_TASK_CAP_GET_CAP_SPACE_COUNT (SYSNS_TASK_CAP | 14)
+#define SYS_TASK_CAP_INSERT_CAP_SPACE    (SYSNS_TASK_CAP | 15)
+#define SYS_TASK_CAP_EXTEND_CAP_SPACE    (SYSNS_TASK_CAP | 16)
 
 #define SYS_ENDPOINT_CAP_SEND_SHORT        (SYSNS_ENDPOINT_CAP | 0)
 #define SYS_ENDPOINT_CAP_SEND_LONG         (SYSNS_ENDPOINT_CAP | 1)
@@ -303,6 +307,28 @@ extern "C" {
   static inline sysret_t sys_task_cap_copy(task_cap_t cap) {
     assert(unwrap_sysret(sys_cap_type(cap)) == CAP_TASK);
     return sys_cap_copy(cap, 0, 0, 0, 0, 0, 0);
+  }
+
+  static inline sysret_t sys_task_cap_get_free_slot_count(task_cap_t cap) {
+    assert(unwrap_sysret(sys_cap_type(cap)) == CAP_TASK);
+    return syscall1(cap, SYS_TASK_CAP_GET_FREE_SLOT_COUNT);
+  }
+
+  static inline sysret_t sys_task_cap_get_cap_space_count(task_cap_t cap) {
+    assert(unwrap_sysret(sys_cap_type(cap)) == CAP_TASK);
+    return syscall1(cap, SYS_TASK_CAP_GET_CAP_SPACE_COUNT);
+  }
+
+  static inline sysret_t sys_task_cap_insert_cap_space(task_cap_t cap, cap_space_cap_t cap_space_cap) {
+    assert(unwrap_sysret(sys_cap_type(cap)) == CAP_TASK);
+    assert(unwrap_sysret(sys_cap_type(cap_space_cap)) == CAP_CAP_SPACE);
+    return syscall2(cap, cap_space_cap, SYS_TASK_CAP_INSERT_CAP_SPACE);
+  }
+
+  static inline sysret_t sys_task_cap_extend_cap_space(task_cap_t cap, page_table_cap_t page_table_cap) {
+    assert(unwrap_sysret(sys_cap_type(cap)) == CAP_TASK);
+    assert(unwrap_sysret(sys_cap_type(page_table_cap)) == CAP_PAGE_TABLE);
+    return syscall2(cap, page_table_cap, SYS_TASK_CAP_EXTEND_CAP_SPACE);
   }
 
   static inline sysret_t sys_endpoint_cap_send_short(endpoint_cap_t cap, uintptr_t arg0, uintptr_t arg1, uintptr_t arg2, uintptr_t arg3, uintptr_t arg4, uintptr_t arg5) {
