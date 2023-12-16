@@ -33,13 +33,10 @@
 #define SYS_CAP_DESTROY (SYSNS_CAP | 3)
 
 #define SYS_MEM_CAP_DEVICE        (SYSNS_MEM_CAP | 0)
-#define SYS_MEM_CAP_READABLE      (SYSNS_MEM_CAP | 1)
-#define SYS_MEM_CAP_WRITABLE      (SYSNS_MEM_CAP | 2)
-#define SYS_MEM_CAP_EXECUTABLE    (SYSNS_MEM_CAP | 3)
-#define SYS_MEM_CAP_PHYS_ADDR     (SYSNS_MEM_CAP | 4)
-#define SYS_MEM_CAP_SIZE_BIT      (SYSNS_MEM_CAP | 5)
-#define SYS_MEM_CAP_USED_SIZE     (SYSNS_MEM_CAP | 6)
-#define SYS_MEM_CAP_CREATE_OBJECT (SYSNS_MEM_CAP | 7)
+#define SYS_MEM_CAP_PHYS_ADDR     (SYSNS_MEM_CAP | 1)
+#define SYS_MEM_CAP_SIZE          (SYSNS_MEM_CAP | 2)
+#define SYS_MEM_CAP_USED_SIZE     (SYSNS_MEM_CAP | 3)
+#define SYS_MEM_CAP_CREATE_OBJECT (SYSNS_MEM_CAP | 4)
 
 #define SYS_TASK_CAP_TID                     (SYSNS_TASK_CAP | 0)
 #define SYS_TASK_CAP_KILLABLE                (SYSNS_TASK_CAP | 1)
@@ -200,24 +197,12 @@ extern "C" {
     return syscall1(cap, SYS_MEM_CAP_DEVICE);
   }
 
-  static inline sysret_t sys_mem_cap_readable(mem_cap_t cap) {
-    return syscall1(cap, SYS_MEM_CAP_READABLE);
-  }
-
-  static inline sysret_t sys_mem_cap_writable(mem_cap_t cap) {
-    return syscall1(cap, SYS_MEM_CAP_WRITABLE);
-  }
-
-  static inline sysret_t sys_mem_cap_executable(mem_cap_t cap) {
-    return syscall1(cap, SYS_MEM_CAP_EXECUTABLE);
-  }
-
   static inline sysret_t sys_mem_cap_phys_addr(mem_cap_t cap) {
     return syscall1(cap, SYS_MEM_CAP_PHYS_ADDR);
   }
 
-  static inline sysret_t sys_mem_cap_size_bit(mem_cap_t cap) {
-    return syscall1(cap, SYS_MEM_CAP_SIZE_BIT);
+  static inline sysret_t sys_mem_cap_size(mem_cap_t cap) {
+    return syscall1(cap, SYS_MEM_CAP_SIZE);
   }
 
   static inline sysret_t sys_mem_cap_used_size(mem_cap_t cap) {
@@ -228,9 +213,9 @@ extern "C" {
     return syscall7(cap, cap_type, arg0, arg1, arg2, arg3, arg4, SYS_MEM_CAP_CREATE_OBJECT);
   }
 
-  static inline sysret_t sys_mem_cap_create_memory_object(mem_cap_t cap, bool readable, bool writable, bool executable, size_t size, size_t alignment) {
+  static inline sysret_t sys_mem_cap_create_memory_object(mem_cap_t cap, size_t size, size_t alignment) {
     assert(unwrap_sysret(sys_cap_type(cap)) == CAP_MEM);
-    return sys_mem_cap_create_object(cap, CAP_MEM, readable, writable, executable, size, alignment);
+    return sys_mem_cap_create_object(cap, CAP_MEM, size, alignment, 0, 0, 0);
   }
 
   static inline sysret_t sys_mem_cap_create_task_object(mem_cap_t        cap,
@@ -253,9 +238,9 @@ extern "C" {
     return sys_mem_cap_create_object(cap, CAP_PAGE_TABLE, 0, 0, 0, 0, 0);
   }
 
-  static inline sysret_t sys_mem_cap_create_virt_page_object(mem_cap_t cap, uintptr_t level) {
+  static inline sysret_t sys_mem_cap_create_virt_page_object(mem_cap_t cap, bool readable, bool writable, bool executable, uintptr_t level) {
     assert(unwrap_sysret(sys_cap_type(cap)) == CAP_MEM);
-    return sys_mem_cap_create_object(cap, CAP_VIRT_PAGE, level, 0, 0, 0, 0);
+    return sys_mem_cap_create_object(cap, CAP_VIRT_PAGE, readable, writable, executable, level, 0);
   }
 
   static inline sysret_t sys_mem_cap_create_cap_space_object(mem_cap_t cap) {
