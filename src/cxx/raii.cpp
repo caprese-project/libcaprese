@@ -16,7 +16,8 @@ unique_cap& unique_cap::operator=(unique_cap&& other) noexcept {
 
 unique_cap::~unique_cap() noexcept {
   if (cap) {
-    unwrap_sysret(sys_cap_revoke(cap));
+    unwrap_sysret(sys_cap_destroy(cap));
+    cap = 0;
   }
 }
 
