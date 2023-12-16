@@ -27,9 +27,10 @@
 #define SYS_SYSTEM_CAP_SIZE           (SYSNS_SYSTEM | 7)
 #define SYS_SYSTEM_CAP_ALIGN          (SYSNS_SYSTEM | 8)
 
-#define SYS_CAP_TYPE   (SYSNS_CAP | 0)
-#define SYS_CAP_COPY   (SYSNS_CAP | 1)
-#define SYS_CAP_REVOKE (SYSNS_CAP | 2)
+#define SYS_CAP_TYPE    (SYSNS_CAP | 0)
+#define SYS_CAP_COPY    (SYSNS_CAP | 1)
+#define SYS_CAP_REVOKE  (SYSNS_CAP | 2)
+#define SYS_CAP_DESTROY (SYSNS_CAP | 3)
 
 #define SYS_MEM_CAP_DEVICE        (SYSNS_MEM_CAP | 0)
 #define SYS_MEM_CAP_READABLE      (SYSNS_MEM_CAP | 1)
@@ -189,6 +190,10 @@ extern "C" {
 
   static inline sysret_t sys_cap_revoke(cap_t cap) {
     return syscall1(cap, SYS_CAP_REVOKE);
+  }
+
+  static inline sysret_t sys_cap_destroy(cap_t cap) {
+    return syscall1(cap, SYS_CAP_DESTROY);
   }
 
   static inline sysret_t sys_mem_cap_device(mem_cap_t cap) {
