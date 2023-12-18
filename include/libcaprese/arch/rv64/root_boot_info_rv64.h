@@ -12,6 +12,7 @@ extern "C" {
     uintptr_t dtb_start;
     uintptr_t dtb_end;
     size_t    num_dtb_vp_caps;
+    size_t    dtb_vp_caps_offset;
   };
 
 #ifdef __cplusplus

@@ -21,6 +21,7 @@ extern "C" {
     page_table_cap_t           page_table_caps[3];
     page_table_cap_t           stack_page_table_caps[3];
     size_t                     num_mem_caps;
+    size_t                     mem_caps_offset;
     cap_t                      caps[];
   } root_boot_info_t;
 
