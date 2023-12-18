@@ -15,7 +15,6 @@ extern "C" {
   typedef struct {
     struct arch_root_boot_info arch_info;
     task_cap_t                 root_task_cap;
-    cap_space_cap_t            first_cap_space_cap;
     page_table_cap_t           root_page_table_cap;
     page_table_cap_t           cap_space_page_table_caps[3];
     page_table_cap_t           page_table_caps[3];
