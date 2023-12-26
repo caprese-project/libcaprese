@@ -31,6 +31,7 @@
 #define SYS_CAP_COPY    (SYSNS_CAP | 1)
 #define SYS_CAP_REVOKE  (SYSNS_CAP | 2)
 #define SYS_CAP_DESTROY (SYSNS_CAP | 3)
+#define SYS_CAP_SAME    (SYSNS_CAP | 4)
 
 #define SYS_MEM_CAP_DEVICE        (SYSNS_MEM_CAP | 0)
 #define SYS_MEM_CAP_PHYS_ADDR     (SYSNS_MEM_CAP | 1)
@@ -191,6 +192,10 @@ extern "C" {
 
   static inline sysret_t sys_cap_destroy(cap_t cap) {
     return syscall1(cap, SYS_CAP_DESTROY);
+  }
+
+  static inline sysret_t sys_cap_same(cap_t cap0, cap_t cap1) {
+    return syscall2(cap0, cap1, SYS_CAP_SAME);
   }
 
   static inline sysret_t sys_mem_cap_device(mem_cap_t cap) {
