@@ -475,6 +475,15 @@ extern "C" {
     return sys_cap_copy(cap, 0, 0, 0, 0, 0, 0);
   }
 
+  static inline void msg_buf_destroy(message_buffer_t* msg_buf) {
+    for (size_t i = 0; i < msg_buf->cap_part_length; ++i) {
+      sys_cap_destroy(msg_buf->data[i]);
+    }
+
+    msg_buf->cap_part_length  = 0;
+    msg_buf->data_part_length = 0;
+  }
+
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus
