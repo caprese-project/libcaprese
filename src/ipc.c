@@ -1,4 +1,3 @@
-#include <internal/branch.h>
 #include <libcaprese/ipc.h>
 #include <libcaprese/syscall.h>
 #include <stdlib.h>
@@ -7,7 +6,7 @@ message_t* new_ipc_message(uint32_t payload_length) {
   payload_length = (payload_length + sizeof(uintptr_t) - 1) / sizeof(uintptr_t) * sizeof(uintptr_t);
 
   message_t* msg = (message_t*)malloc(sizeof(message_t) + payload_length);
-  __if_unlikely (msg == NULL) {
+  if (msg == NULL) {
     return NULL;
   }
 
@@ -40,7 +39,7 @@ void delete_ipc_message(message_t* msg) {
 }
 
 bool set_ipc_data(message_t* msg, uint32_t index, uintptr_t data) {
-  __if_unlikely (index >= msg->header.payload_length / sizeof(uintptr_t)) {
+  if (index >= msg->header.payload_length / sizeof(uintptr_t)) {
     return false;
   }
 
@@ -50,11 +49,11 @@ bool set_ipc_data(message_t* msg, uint32_t index, uintptr_t data) {
 }
 
 bool set_ipc_cap(message_t* msg, uint32_t index, cap_t cap, bool delegate) {
-  __if_unlikely (index >= msg->header.payload_length / sizeof(uintptr_t)) {
+  if (index >= msg->header.payload_length / sizeof(uintptr_t)) {
     return false;
   }
 
-  __if_unlikely (index >= 128) {
+  if (index >= 128) {
     return false;
   }
 
@@ -65,11 +64,11 @@ bool set_ipc_cap(message_t* msg, uint32_t index, cap_t cap, bool delegate) {
 }
 
 uintptr_t get_ipc_data(message_t* msg, uint32_t index) {
-  __if_unlikely (index >= msg->header.payload_length / sizeof(uintptr_t)) {
+  if (index >= msg->header.payload_length / sizeof(uintptr_t)) {
     return 0;
   }
 
-  __if_unlikely (is_ipc_cap(msg, index)) {
+  if (is_ipc_cap(msg, index)) {
     return 0;
   }
 
@@ -77,11 +76,11 @@ uintptr_t get_ipc_data(message_t* msg, uint32_t index) {
 }
 
 cap_t get_ipc_cap(message_t* msg, uint32_t index) {
-  __if_unlikely (index >= msg->header.payload_length / sizeof(uintptr_t)) {
+  if (index >= msg->header.payload_length / sizeof(uintptr_t)) {
     return 0;
   }
 
-  __if_unlikely (!is_ipc_cap(msg, index)) {
+  if (!is_ipc_cap(msg, index)) {
     return 0;
   }
 
@@ -89,11 +88,11 @@ cap_t get_ipc_cap(message_t* msg, uint32_t index) {
 }
 
 bool is_ipc_cap(message_t* msg, uint32_t index) {
-  __if_unlikely (index >= msg->header.payload_length / sizeof(uintptr_t)) {
+  if (index >= msg->header.payload_length / sizeof(uintptr_t)) {
     return false;
   }
 
-  __if_unlikely (index >= 128) {
+  if (index >= 128) {
     return false;
   }
 
@@ -101,11 +100,11 @@ bool is_ipc_cap(message_t* msg, uint32_t index) {
 }
 
 bool is_ipc_cap_delegate(message_t* msg, uint32_t index) {
-  __if_unlikely (index >= msg->header.payload_length / sizeof(uintptr_t)) {
+  if (index >= msg->header.payload_length / sizeof(uintptr_t)) {
     return false;
   }
 
-  __if_unlikely (index >= 128) {
+  if (index >= 128) {
     return false;
   }
 
