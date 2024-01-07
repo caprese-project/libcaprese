@@ -57,6 +57,7 @@
 #define SYS_TASK_CAP_GET_CAP_SPACE_EXT_COUNT (SYSNS_TASK_CAP | 15)
 #define SYS_TASK_CAP_INSERT_CAP_SPACE        (SYSNS_TASK_CAP | 16)
 #define SYS_TASK_CAP_EXTEND_CAP_SPACE        (SYSNS_TASK_CAP | 17)
+#define SYS_TASK_CAP_SET_KILL_NOTIFY         (SYSNS_TASK_CAP | 18)
 
 #define SYS_ENDPOINT_CAP_SEND_SHORT        (SYSNS_ENDPOINT_CAP | 0)
 #define SYS_ENDPOINT_CAP_SEND_LONG         (SYSNS_ENDPOINT_CAP | 1)
@@ -330,6 +331,12 @@ extern "C" {
     assert(unwrap_sysret(sys_cap_type(cap)) == CAP_TASK);
     assert(unwrap_sysret(sys_cap_type(page_table_cap)) == CAP_PAGE_TABLE);
     return syscall2(cap, page_table_cap, SYS_TASK_CAP_EXTEND_CAP_SPACE);
+  }
+
+  static inline sysret_t sys_task_cap_set_kill_notify(task_cap_t cap, endpoint_cap_t endpoint_cap) {
+    assert(unwrap_sysret(sys_cap_type(cap)) == CAP_TASK);
+    assert(unwrap_sysret(sys_cap_type(endpoint_cap)) == CAP_ENDPOINT);
+    return syscall2(cap, endpoint_cap, SYS_TASK_CAP_SET_KILL_NOTIFY);
   }
 
   static inline sysret_t sys_endpoint_cap_send_short(endpoint_cap_t cap, uintptr_t arg0, uintptr_t arg1, uintptr_t arg2, uintptr_t arg3, uintptr_t arg4, uintptr_t arg5) {
