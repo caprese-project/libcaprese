@@ -344,19 +344,19 @@ extern "C" {
     return syscall7(cap, arg0, arg1, arg2, arg3, arg4, arg5, SYS_ENDPOINT_CAP_SEND_SHORT);
   }
 
-  static inline sysret_t sys_endpoint_cap_send_long(endpoint_cap_t cap, message_buffer_t* msg_buf) {
+  static inline sysret_t sys_endpoint_cap_send_long(endpoint_cap_t cap, message_t* msg) {
     assert(unwrap_sysret(sys_cap_type(cap)) == CAP_ENDPOINT);
-    return syscall2(cap, (uintptr_t)msg_buf, SYS_ENDPOINT_CAP_SEND_LONG);
+    return syscall2(cap, (uintptr_t)msg, SYS_ENDPOINT_CAP_SEND_LONG);
   }
 
-  static inline sysret_t sys_endpoint_cap_receive(endpoint_cap_t cap, message_buffer_t* msg_buf) {
+  static inline sysret_t sys_endpoint_cap_receive(endpoint_cap_t cap, message_t* msg) {
     assert(unwrap_sysret(sys_cap_type(cap)) == CAP_ENDPOINT);
-    return syscall2(cap, (uintptr_t)msg_buf, SYS_ENDPOINT_CAP_RECEIVE);
+    return syscall2(cap, (uintptr_t)msg, SYS_ENDPOINT_CAP_RECEIVE);
   }
 
-  static inline sysret_t sys_endpoint_cap_reply(endpoint_cap_t cap, message_buffer_t* msg_buf) {
+  static inline sysret_t sys_endpoint_cap_reply(endpoint_cap_t cap, message_t* msg) {
     assert(unwrap_sysret(sys_cap_type(cap)) == CAP_ENDPOINT);
-    return syscall2(cap, (uintptr_t)msg_buf, SYS_ENDPOINT_CAP_REPLY);
+    return syscall2(cap, (uintptr_t)msg, SYS_ENDPOINT_CAP_REPLY);
   }
 
   static inline sysret_t sys_endpoint_cap_nb_send_short(endpoint_cap_t cap, uintptr_t arg0, uintptr_t arg1, uintptr_t arg2, uintptr_t arg3, uintptr_t arg4, uintptr_t arg5) {
@@ -364,24 +364,24 @@ extern "C" {
     return syscall7(cap, arg0, arg1, arg2, arg3, arg4, arg5, SYS_ENDPOINT_CAP_NB_SEND_SHORT);
   }
 
-  static inline sysret_t sys_endpoint_cap_nb_send_long(endpoint_cap_t cap, message_buffer_t* msg_buf) {
+  static inline sysret_t sys_endpoint_cap_nb_send_long(endpoint_cap_t cap, message_t* msg) {
     assert(unwrap_sysret(sys_cap_type(cap)) == CAP_ENDPOINT);
-    return syscall2(cap, (uintptr_t)msg_buf, SYS_ENDPOINT_CAP_NB_SEND_LONG);
+    return syscall2(cap, (uintptr_t)msg, SYS_ENDPOINT_CAP_NB_SEND_LONG);
   }
 
-  static inline sysret_t sys_endpoint_cap_nb_receive(endpoint_cap_t cap, message_buffer_t* msg_buf) {
+  static inline sysret_t sys_endpoint_cap_nb_receive(endpoint_cap_t cap, message_t* msg) {
     assert(unwrap_sysret(sys_cap_type(cap)) == CAP_ENDPOINT);
-    return syscall2(cap, (uintptr_t)msg_buf, SYS_ENDPOINT_CAP_NB_RECEIVE);
+    return syscall2(cap, (uintptr_t)msg, SYS_ENDPOINT_CAP_NB_RECEIVE);
   }
 
-  static inline sysret_t sys_endpoint_cap_call(endpoint_cap_t cap, message_buffer_t* msg_buf) {
+  static inline sysret_t sys_endpoint_cap_call(endpoint_cap_t cap, message_t* msg) {
     assert(unwrap_sysret(sys_cap_type(cap)) == CAP_ENDPOINT);
-    return syscall2(cap, (uintptr_t)msg_buf, SYS_ENDPOINT_CAP_CALL);
+    return syscall2(cap, (uintptr_t)msg, SYS_ENDPOINT_CAP_CALL);
   }
 
-  static inline sysret_t sys_endpoint_cap_reply_and_receive(endpoint_cap_t cap, message_buffer_t* msg_buf) {
+  static inline sysret_t sys_endpoint_cap_reply_and_receive(endpoint_cap_t cap, message_t* msg) {
     assert(unwrap_sysret(sys_cap_type(cap)) == CAP_ENDPOINT);
-    return syscall2(cap, (uintptr_t)msg_buf, SYS_ENDPOINT_CAP_REPLY_AND_RECEIVE);
+    return syscall2(cap, (uintptr_t)msg, SYS_ENDPOINT_CAP_REPLY_AND_RECEIVE);
   }
 
   static inline sysret_t sys_endpoint_cap_copy(endpoint_cap_t cap) {
@@ -485,15 +485,6 @@ extern "C" {
   static inline sysret_t sys_id_cap_copy(id_cap_t cap) {
     assert(unwrap_sysret(sys_cap_type(cap)) == CAP_ID);
     return sys_cap_copy(cap, 0, 0, 0, 0, 0, 0);
-  }
-
-  static inline void msg_buf_destroy(message_buffer_t* msg_buf) {
-    for (size_t i = 0; i < msg_buf->cap_part_length; ++i) {
-      sys_cap_destroy(msg_buf->data[i]);
-    }
-
-    msg_buf->cap_part_length  = 0;
-    msg_buf->data_part_length = 0;
   }
 
 #ifdef __cplusplus

@@ -2,6 +2,7 @@
 #define LIBCAPRESE_IPC_H_
 
 #include <libcaprese/cap.h>
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -9,19 +10,33 @@
 extern "C" {
 #endif // __cplusplus
 
-  typedef struct {
-    size_t    cap_part_length;
-    size_t    data_part_length;
-    uintptr_t data[126];
-  } message_buffer_t;
+  enum message_type {
+    MSG_TYPE_IPC  = 1,
+    MSG_TYPE_KILL = 2,
+  };
 
-  static inline uintptr_t msg_buf_delegate(cap_t cap) {
-    return (uintptr_t)cap | ((uintptr_t)1 << (sizeof(uintptr_t) * 8 - 1));
-  }
+  struct message_header {
+    enum message_type msg_type;
+    uint32_t          sender_id;
+    uint32_t          receiver_id;
+    uint32_t          payload_length;
+    uint64_t          data_type_map[2];
+  };
 
-  static inline uintptr_t msg_buf_transfer(cap_t cap) {
-    return (uintptr_t)cap;
-  }
+  typedef struct message {
+    struct message_header header;
+    uintptr_t             payload[];
+  } message_t;
+
+  message_t* new_ipc_message(uint32_t payload_length);
+  void       delete_ipc_message(message_t* msg);
+  bool       set_ipc_data(message_t* msg, uint32_t index, uintptr_t data);
+  bool       set_ipc_cap(message_t* msg, uint32_t index, cap_t cap, bool delegate);
+  uintptr_t  get_ipc_data(message_t* msg, uint32_t index);
+  cap_t      get_ipc_cap(message_t* msg, uint32_t index);
+  bool       is_ipc_cap(message_t* msg, uint32_t index);
+  bool       is_ipc_cap_delegate(message_t* msg, uint32_t index);
+  size_t     get_message_size(message_t* msg);
 
 #ifdef __cplusplus
 } // extern "C"

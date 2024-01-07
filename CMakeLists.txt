@@ -32,6 +32,7 @@ target_compile_options(
 
 target_sources(
   libcaprese PRIVATE
+  src/ipc.c
   src/syscall.c
   src/syscall.S
 )
