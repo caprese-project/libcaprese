@@ -20,7 +20,7 @@ message_t* new_ipc_message(uint32_t payload_length) {
   return msg;
 }
 
-void delete_ipc_message(message_t* msg) {
+void destroy_ipc_message(message_t* msg) {
   uint32_t length = msg->header.payload_length / sizeof(uintptr_t);
   if (length > 128) {
     length = 128;
@@ -35,6 +35,12 @@ void delete_ipc_message(message_t* msg) {
     }
   }
 
+  msg->header.data_type_map[0] = 0;
+  msg->header.data_type_map[1] = 0;
+}
+
+void delete_ipc_message(message_t* msg) {
+  destroy_ipc_message(msg);
   free(msg);
 }
 

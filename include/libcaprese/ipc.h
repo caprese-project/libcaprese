@@ -29,6 +29,7 @@ extern "C" {
   } message_t;
 
   message_t* new_ipc_message(uint32_t payload_length);
+  void       destroy_ipc_message(message_t* msg);
   void       delete_ipc_message(message_t* msg);
   bool       set_ipc_data(message_t* msg, uint32_t index, uintptr_t data);
   bool       set_ipc_cap(message_t* msg, uint32_t index, cap_t cap, bool delegate);
