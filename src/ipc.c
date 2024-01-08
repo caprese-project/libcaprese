@@ -93,6 +93,18 @@ cap_t get_ipc_cap(message_t* msg, uint32_t index) {
   return msg->payload[index] & ~(1ull << (sizeof(uintptr_t) * 8 - 1));
 }
 
+void* get_ipc_data_ptr(message_t* msg, uint32_t index) {
+  if (index >= msg->header.payload_length / sizeof(uintptr_t)) {
+    return NULL;
+  }
+
+  if (is_ipc_cap(msg, index)) {
+    return NULL;
+  }
+
+  return &msg->payload[index];
+}
+
 bool is_ipc_cap(message_t* msg, uint32_t index) {
   if (index >= msg->header.payload_length / sizeof(uintptr_t)) {
     return false;
