@@ -50,6 +50,7 @@ bool set_ipc_data(message_t* msg, uint32_t index, uintptr_t data) {
   }
 
   msg->payload[index] = data;
+  msg->header.data_type_map[index / 64] &= ~(1ull << (index % 64));
 
   return true;
 }
