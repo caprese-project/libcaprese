@@ -63,7 +63,7 @@ bool set_ipc_data(message_t* msg, uint32_t index, uintptr_t data) {
     msg->header.data_type_map[index / 64] &= ~(1ull << (index % 64));
   }
 
-  if (index > msg->header.payload_length / sizeof(uintptr_t)) {
+  if (index >= msg->header.payload_length / sizeof(uintptr_t)) {
     msg->header.payload_length = (index + 1) * sizeof(uintptr_t);
   }
 
@@ -82,7 +82,7 @@ bool set_ipc_cap(message_t* msg, uint32_t index, cap_t cap, bool delegate) {
   msg->payload[index] = cap | ((delegate ? 1ull : 0) << (sizeof(uintptr_t) * 8 - 1));
   msg->header.data_type_map[index / 64] |= (1ull << (index % 64));
 
-  if (index > msg->header.payload_length / sizeof(uintptr_t)) {
+  if (index >= msg->header.payload_length / sizeof(uintptr_t)) {
     msg->header.payload_length = (index + 1) * sizeof(uintptr_t);
   }
 
