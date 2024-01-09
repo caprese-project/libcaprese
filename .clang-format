@@ -41,6 +41,8 @@ ForEachMacros: []
 IfMacros:
   - __if_likely
   - __if_unlikely
+  - LIBCAPRESE_IF_LIKELY
+  - LIBCAPRESE_IF_UNLIKELY
 IncludeBlocks: Regroup
 IndentAccessModifiers: false
 IndentCaseBlocks: false
