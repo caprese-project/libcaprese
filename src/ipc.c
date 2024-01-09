@@ -146,6 +146,23 @@ void* get_ipc_data_ptr(message_t* msg, uint32_t index) {
   return &msg->payload[index];
 }
 
+cap_t move_ipc_cap(message_t* msg, uint32_t index) {
+  LIBCAPRESE_IF_UNLIKELY (index >= msg->header.payload_length / sizeof(uintptr_t)) {
+    return 0;
+  }
+
+  LIBCAPRESE_IF_UNLIKELY (!is_ipc_cap(msg, index)) {
+    return 0;
+  }
+
+  cap_t cap = msg->payload[index] & ~(1ull << (sizeof(uintptr_t) * 8 - 1));
+
+  msg->payload[index] = 0;
+  msg->header.data_type_map[index / 64] &= ~(1ull << (index % 64));
+
+  return cap;
+}
+
 bool is_ipc_cap(message_t* msg, uint32_t index) {
   LIBCAPRESE_IF_UNLIKELY (index >= msg->header.payload_length / sizeof(uintptr_t)) {
     return false;

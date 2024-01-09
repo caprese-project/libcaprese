@@ -38,6 +38,7 @@ extern "C" {
   uintptr_t  get_ipc_data(message_t* msg, uint32_t index);
   cap_t      get_ipc_cap(message_t* msg, uint32_t index);
   void*      get_ipc_data_ptr(message_t* msg, uint32_t index);
+  cap_t      move_ipc_cap(message_t* msg, uint32_t index);
   bool       is_ipc_cap(message_t* msg, uint32_t index);
   bool       is_ipc_cap_delegate(message_t* msg, uint32_t index);
   size_t     get_message_size(message_t* msg);
