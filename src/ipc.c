@@ -188,5 +188,5 @@ bool is_ipc_cap_delegate(message_t* msg, uint32_t index) {
 }
 
 size_t get_message_size(message_t* msg) {
-  return sizeof(message_t) + msg->header.payload_length;
+  return (msg->header.payload_length + sizeof(uintptr_t) - 1) / sizeof(uintptr_t);
 }
