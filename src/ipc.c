@@ -71,7 +71,7 @@ bool set_ipc_data(message_t* msg, uint32_t index, uintptr_t data) {
 }
 
 bool set_ipc_cap(message_t* msg, uint32_t index, cap_t cap, bool delegate) {
-  LIBCAPRESE_IF_UNLIKELY (index >= msg->header.payload_length / sizeof(uintptr_t)) {
+  LIBCAPRESE_IF_UNLIKELY (index >= msg->header.payload_capacity / sizeof(uintptr_t)) {
     return false;
   }
 
