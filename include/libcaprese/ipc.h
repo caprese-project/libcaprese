@@ -35,6 +35,8 @@ extern "C" {
   bool       set_ipc_data(message_t* msg, uint32_t index, uintptr_t data);
   bool       set_ipc_cap(message_t* msg, uint32_t index, cap_t cap, bool delegate);
   bool       set_ipc_data_array(message_t* msg, uint32_t index, const void* data, size_t size);
+  bool       set_ipc_data_str(message_t* msg, uint32_t index, const char* str);
+  bool       set_ipc_data_strn(message_t* msg, uint32_t index, const char* str, size_t size);
   uintptr_t  get_ipc_data(message_t* msg, uint32_t index);
   cap_t      get_ipc_cap(message_t* msg, uint32_t index);
   void*      get_ipc_data_ptr(message_t* msg, uint32_t index);
