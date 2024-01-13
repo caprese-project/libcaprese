@@ -126,7 +126,7 @@ bool set_ipc_data_strn(message_t* msg, uint32_t index, const char* str, size_t s
 
   memcpy(&msg->payload[first], str, size);
   char* term = ((char*)&msg->payload[first]) + size;
-  term       = '\0';
+  *term      = '\0';
 
   for (size_t i = first; i < last && i < 128; ++i) {
     msg->header.data_type_map[i / 64] &= ~(1ull << (i % 64));
